@@ -3,5 +3,7 @@ set -e # This will stop when diff returns non-zero
 
 for i in {1..100}; do
   echo "******* i = $i"
-  ../bin/runUnitTests.py -s Buildings.Examples.VAVReheat -b
+  ../bin/runUnitTests.py -s Buildings.Examples.VAVReheat -b -d
+  rm -rf ../tmp-Buildings*
+  mv /tmp/tmp-Buildings* ..
 done
