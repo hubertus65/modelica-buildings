@@ -17,7 +17,7 @@ savelog(\"dymola.log\");
 exit();
 """ > run.mos
 
-for i in {1..50}; do
+for i in {1..500}; do
 echo "******* i = $i"
 if [ -f dymola.log ]; then
   cp dymola.log dymola-old.log
