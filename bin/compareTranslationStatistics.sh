@@ -11,13 +11,14 @@ Advanced.EfficientMinorEvents=false;
 Advanced.PedanticModelica = true;
 openModel(\"package.mo\");
 Advanced.TranslationInCommandLog := true;
+Advanced.GenerateVariableDependencies = false;
 Modelica.Utilities.Files.remove(\"dymola.log\");
 translateModel(\"Buildings.Examples.VAVReheat.Guideline36\");
 savelog(\"dymola.log\");
 exit();
 """ > run.mos
 
-for i in {1..500}; do
+for i in {1..1000}; do
 echo "******* i = $i"
 if [ -f dymola.log ]; then
   cp dymola.log dymola-old.log
