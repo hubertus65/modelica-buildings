@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-ci.com/lbl-srg/modelica-buildings.svg?branch=master)](https://travis-ci.com/lbl-srg/modelica-buildings)
 
-This is the development site for the Modelica _Buildings_ library and its user guide.
+This is a fork of the development site for the Modelica _Buildings_ library and its user guide to simplify the use 
+for Modelon Impact cloud or on-prem users. A separate installation of the integration with EnergyPlus is not necessary, this 
+fork has the necessary files fully integrated and all changes are done. This fork tracks the master branch of the LBNL development github site. 
 
 Stable releases including all previous releases are available from the main project site
 at http://simulationresearch.lbl.gov/modelica.
