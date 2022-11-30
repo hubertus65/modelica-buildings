@@ -229,27 +229,11 @@ The following <b style=\"color:blue\">new components</b> have been added
 to <b style=\"color:blue\">existing</b> libraries:
 </p>
 <table class=\"releaseTable\" summary=\"summary\" border=\"1\" cellspacing=\"0\" cellpadding=\"2\" style=\"border-collapse:collapse;\">
-<tr><td colspan=\"2\"><b>Buildings.Controls.OBC.CDL</b>
+<tr><td valign=\"top\">xxx
     </td>
-  </tr>
-  <tr><td valign=\"top\">Buildings.Controls.OBC.CDL.Routing.BooleanExtractSignal<br/>
-                         Buildings.Controls.OBC.CDL.Routing.BooleanExtractor<br/>
-                         Buildings.Controls.OBC.CDL.Routing.IntegerExtractSignal<br/>
-                         Buildings.Controls.OBC.CDL.Routing.IntegerExtractor
+    <td valign=\"top\">xxx.
     </td>
-    <td valign=\"top\">Added boolean and integer extract signals.<br/>
-                       This is for
-                       <a href=\"https://github.com/lbl-srg/modelica-buildings/issues/3125\">#3125</a>.
-    </td>
-  </tr>
-<tr><td colspan=\"2\"><b>Buildings.Controls.OBC</b>
-      </td>
-  </tr>
-  <tr><td valign=\"top\">Buildings.Controls.OBC.ASHRAE.G36
-      </td>
-      <td valign=\"top\">Package with sequences implemented according to ASHRAE Guideline 36 official release, May 2020.
-      </td>
-  </tr>
+</tr>
 </table>
 <!-- Backward compatible changes -->
 <p>
@@ -329,6 +313,12 @@ have been <b style=\"color:blue\">improved</b> in a
 <tr><td colspan=\"2\"><b>Buildings.Utilities.Math</b>
     </td>
 </tr>
+  <tr><td valign=\"top\">Buildings.Utilities.Math.Functions.regNonZeroPower
+    </td>
+    <td valign=\"top\">Improved documentation and assertion.<br/>
+                       This is for <a href=\"https://github.com/lbl-srg/modelica-buildings/issues/3135\">Buildings, issue #3135</a>.
+    </td>
+  </tr>
 <tr><td valign=\"top\">Buildings.Utilities.Math.Functions.spliceFunction<br/>
                          Buildings.Utilities.Math.Functions.BaseClasses.der_spliceFunction
     </td>
@@ -374,7 +364,38 @@ have been <b style=\"color:blue\">improved</b> in a
     </td>
     <td valign=\"top\">Changed <code>fan[].m_flow_nominal</code> from 10 to 0.1.<br/>
                        This is for
-                       <a href=\"https://github.com/lbl-srg/modelica-buildings/issues/3067\">#3067</a>
+                       <a href=\"https://github.com/lbl-srg/modelica-buildings/issues/3067\">#3067</a>.
+    </td>
+</tr>
+  <tr><td colspan=\"2\"><b>Buildings.Fluid.Movers</b>
+    </td>
+  </tr><tr><td valign=\"top\">Buildings.Fluid.Movers.FlowControlled_m_flow
+    </td>
+    <td valign=\"top\">Added assertion to avoid using the model with a head that is
+                       significantly higher than the head specified by its performance curve.<br/>
+                       This is for
+                       <a href=\"https://github.com/ibpsa/modelica-ibpsa/issues/1659\">IBPSA, #1659</a>.
+    </td>
+  </tr>
+<tr><td colspan=\"2\"><b>Buildings.Fluid.SolarCollectors</b>
+    </td>
+</tr><tr><td valign=\"top\">Buildings.Fluid.SolarCollectors.Controls.CollectorPump
+    </td>
+    <td valign=\"top\">Corrected implementation to make comparison based on total irradiation on tilted surface
+                       rather than the direct normal irradiation.
+                       This required adding parameters for the azimuth, tilt and ground reflectance.<br/>
+                       Added hysteresis to the controller, and changed output signal to be boolean-valued on/off
+                       rather than a continuous signal.<br/>
+                       Moved the old implementation to <code>Buildings.Obsolete.Fluid.SolarCollectors.Controls</code>.<br/>
+                       This is for
+                       <a href=\"https://github.com/lbl-srg/modelica-buildings/issues/3074\">#3074</a>.
+    </td>
+</tr>
+<tr><td colspan=\"2\"><b>Buildings.Obsolete</b>
+    </td>
+</tr><tr><td valign=\"top\">Buildings.Obsolete.DistrictHeatingCooling
+    </td>
+    <td valign=\"top\">Removed package which is no longer supported.
     </td>
 </tr>
 </table>
@@ -414,8 +435,31 @@ that can lead to wrong simulation results):
 <tr><td colspan=\"2\"><b>Buildings.Fluid.HeatExchangers</b>
     </td>
 </tr>
-<tr><td valign=\"top\"> Buildings.Fluid.HeatExchangers.WetCoilCounterFlow<br/>
-                        Buildings.Fluid.HeatExchangers.WetCoilDiscretized</br>
+<tr><td valign=\"top\">Buildings.Fluid.HeatExchangers.BaseClasses.PartialEffectivenessNTU
+    </td>
+    <td valign=\"top\">Corrected wrong temperature in assignment of <code>sta2_default</code>.
+                       For <code>Buildings.Media.Air</code> and <code>Buildings.Media.Water</code>
+                       this error does not affect the results.<br/>
+                       This is for
+                       <a href=\"https://github.com/lbl-srg/modelica-buildings/issues/3151\">Buildings, issue 3151</a>
+    </td>
+</tr>
+<tr><td valign=\"top\">Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.MultiStage<br/>
+                       Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.SingleStage<br/>
+                       Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.VariableSpeed<br/>
+                       Buildings.Fluid.HeatExchangers.DXCoils.WaterCooled.MultiStage<br/>
+                       Buildings.Fluid.HeatExchangers.DXCoils.WaterCooled.SingleStage<br/>
+                       Buildings.Fluid.HeatExchangers.DXCoils.WaterCooled.VariableSpeed<br/>
+                       Buildings.Fluid.HeatExchangers.DXCoils.BaseClasses.CoolingCapacityWaterCooled<br/>
+                       Buildings.Fluid.HeatExchangers.DXCoils.BaseClasses.PartialCoolingCapacity
+
+    </td>
+    <td valign=\"top\">Corrected performance calculation as a function of mass flow rates.<br/>
+                       This is for <a href=\"https://github.com/lbl-srg/modelica-buildings/issues/3146\">#3146</a>.
+    </td>
+</tr>
+<tr><td valign=\"top\">Buildings.Fluid.HeatExchangers.WetCoilCounterFlow<br/>
+                       Buildings.Fluid.HeatExchangers.WetCoilDiscretized
     </td>
     <td valign=\"top\">Reverted the correction on latent heat from component.<br/>
                        This is for <a href=\"https://github.com/lbl-srg/modelica-buildings/issues/3065\">#3065</a>.
