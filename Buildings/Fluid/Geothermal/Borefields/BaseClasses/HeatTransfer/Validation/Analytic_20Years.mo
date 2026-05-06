@@ -34,7 +34,7 @@ model Analytic_20Years
     nCel=5,
     nSeg=12,
     borFieDat=borFieDat,
-    forceGFunCalc=true) "Ground temperature response of borehole"
+    forceGFunCalc=true,DiscreteSolver = false,Tsample = 3599.999999999999712) "Ground temperature response of borehole"
     annotation (Placement(transformation(extent={{-40,40},{-20,60}})));
 
   Modelica.Blocks.Sources.CombiTimeTable timTabQ(

@@ -1,5 +1,6 @@
 within Buildings.Fluid.Geothermal.Borefields.BaseClasses.HeatTransfer;
 model GroundTemperatureResponse "Model calculating discrete load aggregation"
+import Buildings.Fluid.Geothermal.Borefields.BaseClasses.HeatTransfer.Validation.BaseClasses.trapezoidalDiscreteTimeStep;
   parameter Modelica.Units.SI.Time tLoaAgg(final min=Modelica.Constants.eps)=
     3600 "Time resolution of load aggregation";
   parameter Integer nCel(min=1)=5 "Number of cells per aggregation level";
@@ -20,8 +21,12 @@ model GroundTemperatureResponse "Model calculating discrete load aggregation"
     "Heat flow from all boreholes combined (positive if heat from fluid into soil)"
     annotation (Placement(transformation(extent={{-120,-10},{-100,10}}),
         iconTransformation(extent={{-120,-10},{-100,10}})));
-
+// ExperimentalDiscreteSolver
+parameter Boolean DiscreteSolver = true "If true, use hand-coded discrete time Euler/RK4 for all states";
+parameter Modelica.Units.SI.Time Tsample "Sample time of discrete solver";
 protected
+// Keep internal RK4 parameters protected
+
   constant Integer nTimSho = 26 "Number of time steps in short time region";
   constant Integer nTimLon = 50 "Number of time steps in long time region";
   constant Real ttsMax = exp(5) "Maximum non-dimensional time for g-function calculation";
@@ -75,7 +80,7 @@ protected
     "Derivative of wall temperature change from previous time steps";
   final parameter Real dTStepdt(fixed=false)
     "Time derivative of g/(2*pi*H*Nb*ks) within most recent cell";
-
+public
   Modelica.Units.SI.Heat U "Accumulated heat flow from all boreholes";
   discrete Modelica.Units.SI.Heat U_old
     "Accumulated heat flow from all boreholes at last aggregation step";
@@ -126,8 +131,17 @@ initial equation
       forceGFunCalc=forceGFunCalc);
 
 equation
-  der(delTBor) = dTStepdt*QBor_flow + derDelTBor0;
-  der(U) = QBor_flow;
+  if DiscreteSolver then
+    when sample(0.0,Tsample) then
+      //U = pre(U) + Tsample*pre(QBor_flow) "forward Euler";
+      //delTBor = pre(delTBor) + Tsample*(pre(dTStepdt)*pre(QBor_flow) + pre(derDelTBor0))  "forward Euler";
+      U = trapezoidalDiscreteTimeStep(pre(U),pre(QBor_flow),QBor_flow,Tsample) "Trapezoidal Rule";
+      delTBor = trapezoidalDiscreteTimeStep(pre(delTBor),pre(dTStepdt)*pre(QBor_flow) + pre(derDelTBor0),dTStepdt*QBor_flow +derDelTBor0,Tsample) "Trapezoidal Rule";
+    end when;
+  else 
+    der(delTBor) = dTStepdt*QBor_flow + derDelTBor0;
+    der(U) = QBor_flow;
+  end if;
 
   sampleLoad = sample(t_start, tLoaAgg);
   when sampleLoad then

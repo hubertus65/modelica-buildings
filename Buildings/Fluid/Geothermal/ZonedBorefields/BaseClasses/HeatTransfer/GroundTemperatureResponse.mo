@@ -1,6 +1,7 @@
 within Buildings.Fluid.Geothermal.ZonedBorefields.BaseClasses.HeatTransfer;
 model GroundTemperatureResponse
   "Model calculating discrete load aggregation"
+  import Buildings.Fluid.Geothermal.Borefields.BaseClasses.HeatTransfer.Validation.BaseClasses.trapezoidalDiscreteTimeStep;
   parameter Modelica.Units.SI.Time tLoaAgg(final min=Modelica.Constants.eps)=
     3600 "Time resolution of load aggregation";
   parameter Integer nCel(min=1)=5 "Number of cells per aggregation level";
@@ -22,7 +23,9 @@ model GroundTemperatureResponse
     "Heat flow from borehole segment (positive if heat from fluid into soil)"
     annotation (Placement(transformation(extent={{-120,-10},{-100,10}}),
         iconTransformation(extent={{-120,-10},{-100,10}})));
-
+ // ExperimentalDiscreteSolver
+parameter Boolean DiscreteSolver = true "If true, use hand-coded discrete time RK4/Euler for all states";
+parameter Modelica.Units.SI.Time Tsample = 3600 "Sample time of discrete solver";
 protected
   constant Real lvlBas = 2 "Base for exponential cell growth between levels";
   constant Real ttsMax = exp(5) "Maximum non-dimensional time for g-function calculation";
@@ -138,8 +141,18 @@ equation
     "The simulation is longer than the calculated thermal response factors.
     Adjust the constant `timFin` in
     Buildings.Fluid.Geothermal.ZonedBorefields.BaseClasses.HeatTransfer.GroundTemperatureResponse.");
-  der(delTBor_1d) = dTStepdt .* QBor_flow_1d + derDelTBor0;
-  der(U[:,1]) = QBor_flow_1d;
+  if DiscreteSolver then
+    when sample(0.0,Tsample) then
+      //U[:,1] = pre(U[:,1]) + Tsample*pre(QBor_flow_1d) "forward Euler";
+      //delTBor_1d = pre(delTBor_1d) + Tsample*(pre(dTStepdt).*pre(QBor_flow_1d) + pre(derDelTBor0)) "forward Euler";
+      U[:,1] = trapezoidalDiscreteTimeStep(pre(U[:,1]),pre(QBor_flow_1d),QBor_flow_1d,Tsample) "Trapezoidal Rule";
+      delTBor_1d = trapezoidalDiscreteTimeStep(pre(delTBor_1d),pre(dTStepdt).*pre(QBor_flow_1d) + pre(derDelTBor0),dTStepdt.*QBor_flow_1d + derDelTBor0,Tsample) "Trapezoidal Rule";
+    end when;
+  else 
+    der(delTBor_1d) = dTStepdt .* QBor_flow_1d + derDelTBor0;
+    der(U[:,1]) = QBor_flow_1d;
+  end if;
+
   for i in 1:nZon loop
     for j in 1:nSeg loop
       delTBor[i,j] = delTBor_1d[(i-1)* nSeg + j];

@@ -1,0 +1,58 @@
+{
+  "version" : "2",
+  "id" : "780c6a8a-11f4-40bc-84da-5818ae670d99",
+  "experiment" : {
+    "base" : {
+      "analysis" : {
+        "variableFilters" : [ {
+          "type" : "text",
+          "value" : "borHol.groTemRes.*"
+        } ],
+        "selectedType" : "dynamic",
+        "choices" : [ {
+          "type" : "dynamic",
+          "parameters" : {
+            "final_time" : 31536000,
+            "start_time" : 0
+          },
+          "simulationOptions" : {
+            "dynamic_diagnostics" : false,
+            "ncp" : 8760
+          },
+          "solverOptions" : {
+            "store_event_points" : true,
+            "tolerance" : 1.0E-6
+          },
+          "compilerOptions" : {
+            "generate_html_diagnostics" : false,
+            "include_protected_variables" : false
+          },
+          "runtimeOptions" : { }
+        } ],
+        "expansion" : {
+          "discreteAlgorithm" : {
+            "noOfSamples" : 0,
+            "seed" : 0
+          },
+          "continuousAlgorithm" : {
+            "type" : "SOBOL",
+            "noOfSamples" : 10,
+            "seed" : 0
+          }
+        }
+      },
+      "modifiers" : {
+        "initializeFrom" : "",
+        "variables" : [ {
+          "name" : "borHol.groTemRes.DiscreteSolver",
+          "expression" : "false"
+        } ]
+      }
+    }
+  },
+  "metadata" : {
+    "created" : "2026-05-06 14:35:27.50239186",
+    "lastModified" : "2026-05-06T14:40:00.341859279Z",
+    "name" : "Continuous"
+  }
+}
