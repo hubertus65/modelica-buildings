@@ -96,6 +96,10 @@ partial model PartialMultiplePumps
     final show_T=show_T,
     final allowFlowReversal=allowFlowReversal,
     final energyDynamics=energyDynamics,
+    final p_start=p_start,
+    final T_start=T_start,
+    final X_start=X_start,
+    final C_start=C_start,
     final use_riseTime=use_riseTime,
     final riseTime=riseTime,
     final init=init,
@@ -256,6 +260,13 @@ Buildings.Fluid.Movers.BaseClasses.PartialFlowMachine</a>.
 Hydronics are resolved with mass flow rate multiplier components.
 </html>", revisions="<html>
 <ul>
+<li>
+October 29, 2026, by Hubertus Tummescheit:<br/>
+Propagated the start values <code>p_start</code>, <code>T_start</code>, <code>X_start</code> and <code>C_start</code>
+to the pump <code>pum</code>, which used the medium defaults.<br/>
+This is for
+<a href=\"https://github.com/hubertus65/modelica-buildings/issues/2\">hubertus65/modelica-buildings#2</a>.
+</li>
 <li>
 February 24, 2023, by Antoine Gautier:<br/>
 First implementation.
