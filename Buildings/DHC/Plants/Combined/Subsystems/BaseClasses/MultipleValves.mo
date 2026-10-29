@@ -71,6 +71,10 @@ model MultipleValves
     each final m_flow_nominal=m_flow_nominal * {1,-1,-1},
     each final dp_nominal=fill(0,3),
     each final energyDynamics=energyDynamics,
+    each final p_start=p_start,
+    each final T_start=T_start,
+    each final X_start=X_start,
+    each final C_start=C_start,
     each final portFlowDirection_1=if allowFlowReversal then
       Modelica.Fluid.Types.PortFlowDirection.Bidirectional else
       Modelica.Fluid.Types.PortFlowDirection.Entering,
@@ -89,6 +93,10 @@ model MultipleValves
     each final m_flow_nominal=m_flow_nominal * {1,-1,1},
     each final dp_nominal=fill(0,3),
     each final energyDynamics=energyDynamics,
+    each final p_start=p_start,
+    each final T_start=T_start,
+    each final X_start=X_start,
+    each final C_start=C_start,
     each final portFlowDirection_1=if allowFlowReversal then
       Modelica.Fluid.Types.PortFlowDirection.Bidirectional else
       Modelica.Fluid.Types.PortFlowDirection.Entering,
@@ -168,6 +176,13 @@ An optional fixed resistance may be included in series with each valve.
 </p>
 </html>", revisions="<html>
 <ul>
+<li>
+October 29, 2026, by Hubertus Tummescheit:<br/>
+Propagated the start values <code>p_start</code>, <code>T_start</code>, <code>X_start</code> and <code>C_start</code>
+to the junctions <code>junInl</code> and <code>junOut</code>, which used the medium defaults.<br/>
+This is for
+<a href=\"https://github.com/hubertus65/modelica-buildings/issues/2\">hubertus65/modelica-buildings#2</a>.
+</li>
 <li>
 June 17, 2026, by Michael Wetter:<br/>
 Updated implementation to allow a flow coefficient <code>n</code> that is different from <code>2</code>.

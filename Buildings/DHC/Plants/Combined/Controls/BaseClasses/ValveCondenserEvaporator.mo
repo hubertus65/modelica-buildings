@@ -1163,7 +1163,7 @@ equation
           160},{-172,160}},      color={255,127,0}));
   connect(chaAss.y, isChaAss.u2) annotation (Line(points={{-188,160},{-184,160},
           {-184,152},{-172,152}}, color={255,127,0}));
-  connect(isChaAss.y, ctlTConWatConRet.uEna) annotation (Line(points={{-148,160},
+  connect(allCloAndChaAndEna.y, ctlTConWatConRet.uEna) annotation (Line(points={{-148,160},
           {-84,160},{-84,168}},   color={255,0,255}));
   connect(TConWatConRetSet.y, ctlTConWatConRet.u_s) annotation (Line(points={{-148,
           100},{-110,100},{-110,180},{-92,180}},       color={0,0,127}));
@@ -1583,6 +1583,15 @@ bypass valve is commanded open.
 </p>
 </html>", revisions="<html>
 <ul>
+<li>
+October 29, 2026, by Hubertus Tummescheit:<br/>
+Enabled the condenser water return temperature controller <code>ctlTConWatConRet</code> with
+<code>allCloAndChaAndEna</code>, the condition under which its output is used, instead of charge assist alone.
+Otherwise the controller winds up while its output is overridden (plant disabled), is not reset when the plant
+is enabled, and the bypass valve can remain below the threshold that enables the condenser water pump.<br/>
+This is for
+<a href=\"https://github.com/hubertus65/modelica-buildings/issues/2\">hubertus65/modelica-buildings#2</a>.
+</li>
 <li>
 February 24, 2023, by Antoine Gautier:<br/>
 First implementation.
