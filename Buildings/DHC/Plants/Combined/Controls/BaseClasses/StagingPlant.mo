@@ -204,21 +204,21 @@ block StagingPlant
     "Compute tracking error"
     annotation (Placement(transformation(extent={{-200,250},{-180,270}})));
   Buildings.Controls.OBC.CDL.Reals.LessThreshold cmpErrLim(
-    final t=-1,
-    final h=1E-4)
+    t=-1,
+    h=1E-4)
     "Check tracking error limit"
     annotation (Placement(transformation(extent={{-170,200},{-150,220}})));
   Buildings.Controls.OBC.CDL.Reals.GreaterThreshold cmpErrLim1(
-    final t=1.5E4,
-    final h=1E-1)
+    t=1.5E4,
+    h=1E-1)
     "Check tracking error limit"
     annotation (Placement(transformation(extent={{-170,250},{-150,270}})));
   Buildings.Controls.OBC.CDL.Logical.Timer timErrExcLim(
-    final t=15*60)
+    t=15*60)
     "Timer for error exceeding error limit"
     annotation (Placement(transformation(extent={{-110,200},{-90,220}})));
   Buildings.Controls.OBC.CDL.Logical.Timer timErrExcLim1(
-    final t=15*60)
+    t=15*60)
     "Timer for error exceeding error limit"
     annotation (Placement(transformation(extent={{-110,250},{-90,270}})));
   Buildings.Controls.OBC.CDL.Logical.Or or2
@@ -258,7 +258,7 @@ block StagingPlant
     final h=1E-1)
     "Check OPLR limit"
     annotation (Placement(transformation(extent={{-80,-130},{-60,-110}})));
-  Buildings.Controls.OBC.CDL.Logical.Timer timOPLRExcLim1(final t=15*60)
+  Buildings.Controls.OBC.CDL.Logical.Timer timOPLRExcLim1(t=15*60)
     "Timer for OPLR exceeding limit"
     annotation (Placement(transformation(extent={{-50,-130},{-30,-110}})));
   Buildings.DHC.Plants.Combined.Controls.BaseClasses.StageIndex staHea(
@@ -683,6 +683,14 @@ Failsafe conditions: the failsafe stage up conditions are not true.
 </ul>
 </html>", revisions="<html>
 <ul>
+<li>
+October 29, 2026, by Hubertus Tummescheit:<br/>
+Removed the <code>final</code> prefix of the thresholds and delays of the cooling failsafe conditions
+(<code>cmpErrLim</code>, <code>cmpErrLim1</code>, <code>timErrExcLim</code>, <code>timErrExcLim1</code>,
+<code>timOPLRExcLim1</code>), so that they can be tuned like <code>timOPLRExcLim</code>. Defaults are unchanged.<br/>
+This is for
+<a href=\"https://github.com/hubertus65/modelica-buildings/issues/2\">hubertus65/modelica-buildings#2</a>.
+</li>
 <li>
 February 25, 2025, by Jianjun Hu:<br/>
 Reimplemented it to comply with CDL specification.
