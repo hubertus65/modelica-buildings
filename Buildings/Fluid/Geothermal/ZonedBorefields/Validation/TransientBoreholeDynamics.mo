@@ -20,11 +20,11 @@ model TransientBoreholeDynamics "Description"
 
   Buildings.Fluid.Geothermal.ZonedBorefields.OneUTube borHol(
     redeclare package Medium = Medium,
-    nSeg=6,
+    nSeg=3,
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     borFieDat=borFieDat,
     TExt0_start=T_start,
-    dT_dz=0,groTemRes(Tsample = 3599.999999999999712))
+    dT_dz=0,groTemRes(Tsample = 3599.999999999999712),allowFlowReversal = false)
     "Borehole"
     annotation (Placement(transformation(extent={{60,-10},{80,10}})));
   Movers.Preconfigured.FlowControlled_m_flow pum[nZon](
@@ -73,9 +73,9 @@ model TransientBoreholeDynamics "Description"
     annotation (Placement(transformation(extent={{-30,-10},{-10,10}})));
   Modelica.Blocks.Sources.Pulse heaRat[nZon](
     each amplitude=1,
-    each width=50,
-    period=3600.*24*60*{1,2},
-    startTime=3600.*24*30*{0,1}) "Heating rate into each zone"
+    each width=10,
+    period=3600 * {1,2},
+    startTime=3600 * {0,1}) "Heating rate into each zone"
     annotation (Placement(transformation(extent={{-70,10},{-50,30}})));
 
   Modelica.Blocks.Sources.CombiTimeTable timTabT(

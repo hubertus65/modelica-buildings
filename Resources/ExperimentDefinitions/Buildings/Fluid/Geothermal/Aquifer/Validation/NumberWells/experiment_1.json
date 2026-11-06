@@ -1,13 +1,10 @@
 {
   "version" : "2",
-  "id" : "780c6a8a-11f4-40bc-84da-5818ae670d99",
+  "id" : "8ac64f3c-dd14-4bdd-ae57-674bb5c20789",
   "experiment" : {
     "base" : {
       "analysis" : {
-        "variableFilters" : [ {
-          "type" : "text",
-          "value" : "borHol.groTemRes.*"
-        } ],
+        "variableFilters" : [ ],
         "selectedType" : "dynamic",
         "choices" : [ {
           "type" : "dynamic",
@@ -17,14 +14,13 @@
           },
           "simulationOptions" : {
             "dynamic_diagnostics" : false,
-            "ncp" : 8760
+            "ncp" : 500
           },
           "solverOptions" : {
-            "store_event_points" : true,
-            "tolerance" : 1.0E-6
+            "store_event_points" : true
           },
           "compilerOptions" : {
-            "generate_html_diagnostics" : false,
+            "generate_html_diagnostics" : true,
             "include_protected_variables" : false
           },
           "runtimeOptions" : { }
@@ -43,16 +39,13 @@
       },
       "modifiers" : {
         "initializeFrom" : "",
-        "variables" : [ {
-          "name" : "borHol.groTemRes.DiscreteSolver",
-          "expression" : "false"
-        } ]
+        "variables" : [ ]
       }
     }
   },
   "metadata" : {
-    "created" : "2026-05-06 14:35:27.50239186",
-    "lastModified" : "2026-05-06T14:40:00.341859279Z",
-    "name" : "Continuous"
+    "created" : "2026-07-16 22:39:15.480164417",
+    "lastModified" : "2026-07-16 22:39:15.480164417",
+    "name" : "Experiment 1"
   }
 }

@@ -1,23 +1,20 @@
 {
   "version" : "2",
-  "id" : "7a84f7a8-1ae0-4cbd-8e8b-4d205b0b4739",
+  "id" : "b1508dc1-9ad9-4194-9257-b06fbf9b6173",
   "experiment" : {
     "base" : {
       "analysis" : {
-        "variableFilters" : [ {
-          "type" : "text",
-          "value" : "groTemRes.*"
-        } ],
+        "variableFilters" : [ ],
         "selectedType" : "dynamic",
         "choices" : [ {
           "type" : "dynamic",
           "parameters" : {
-            "final_time" : 3.1535999999999996E7,
+            "final_time" : 1,
             "start_time" : 0
           },
           "simulationOptions" : {
             "dynamic_diagnostics" : false,
-            "ncp" : 8760
+            "ncp" : 500
           },
           "solverOptions" : {
             "store_event_points" : true
@@ -42,16 +39,13 @@
       },
       "modifiers" : {
         "initializeFrom" : "",
-        "variables" : [ {
-          "name" : "groTemRes.DiscreteSolver",
-          "expression" : "true"
-        } ]
+        "variables" : [ ]
       }
     }
   },
   "metadata" : {
-    "created" : "2026-05-06 00:20:47.024660901",
-    "lastModified" : "2026-05-06T00:21:09.184309907Z",
-    "name" : "Discrete"
+    "created" : "2026-05-06 18:23:08.611267924",
+    "lastModified" : "2026-05-06 18:23:08.611267924",
+    "name" : "Experiment 1"
   }
 }

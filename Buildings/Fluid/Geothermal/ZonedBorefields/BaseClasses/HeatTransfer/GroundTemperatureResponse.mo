@@ -101,6 +101,8 @@ protected
     "Shifted vector of aggregated loads";
   Modelica.Units.SI.HeatFlowRate[nSegTot] QBor_flow_1d
     "Flattened array of heat flows (QBor_flow)";
+  // Modelica.Units.SI.HeatFlowRate[nSegTot] QBor_flow_1d_pre if DiscreteSolver
+  //   "Flattened array of heat flows (QBor_flow) at previous timestep";    
   Modelica.Units.SI.TemperatureDifference[nSegTot] delTBor_1d
     "Flattened array of temperature differences (delTBor)";
   discrete Integer curCel "Current occupied cell";
@@ -142,12 +144,20 @@ equation
     Adjust the constant `timFin` in
     Buildings.Fluid.Geothermal.ZonedBorefields.BaseClasses.HeatTransfer.GroundTemperatureResponse.");
   if DiscreteSolver then
-    when sample(0.0,Tsample) then
       //U[:,1] = pre(U[:,1]) + Tsample*pre(QBor_flow_1d) "forward Euler";
-      //delTBor_1d = pre(delTBor_1d) + Tsample*(pre(dTStepdt).*pre(QBor_flow_1d) + pre(derDelTBor0)) "forward Euler";
-      U[:,1] = trapezoidalDiscreteTimeStep(pre(U[:,1]),pre(QBor_flow_1d),QBor_flow_1d,Tsample) "Trapezoidal Rule";
-      delTBor_1d = trapezoidalDiscreteTimeStep(pre(delTBor_1d),pre(dTStepdt).*pre(QBor_flow_1d) + pre(derDelTBor0),dTStepdt.*QBor_flow_1d + derDelTBor0,Tsample) "Trapezoidal Rule";
-    end when;
+      //delTBor_1d = pre(delTBor_1d) + Tsample*(dTStepdt.*pre(QBor_flow_1d) + pre(derDelTBor0)) "forward Euler";
+      for i in 1:nSegTot loop
+        //U[:,1] = pre(U[:,1]) + 0.5*Tsample*(pre(QBor_flow_1d) + Tsample*(pre(QBor_flow_1d) + Tsample*pre(QBor_flow_1d))) "Trapezoidal Rule";
+        //delTBor_1d = pre(delTBor_1d) + 0.5*Tsample*(dTStepdt.*pre(QBor_flow_1d) + pre(derDelTBor0) + 
+        //  Tsample*(dTStepdt.*pre(QBor_flow_1d) + pre(derDelTBor0) + Tsample*(dTStepdt.*pre(QBor_flow_1d) + pre(derDelTBor0)))) "Trapezoidal Rule";
+       when sample(0.0,Tsample) then        
+         U[i,1] = trapezoidalDiscreteTimeStep(pre(U[i,1]),pre(QBor_flow_1d[i]),pre(U[i,1]) + Tsample*pre(QBor_flow_1d[i]),Tsample) "Trapezoidal Rule";
+         delTBor_1d[i] = trapezoidalDiscreteTimeStep(pre(delTBor_1d[i]),dTStepdt[i]*pre(QBor_flow_1d[i]) + pre(derDelTBor0[i]),pre(delTBor_1d[i]) + Tsample*(dTStepdt[i]*pre(QBor_flow_1d[i]) + pre(derDelTBor0[i])),Tsample) "Trapezoidal Rule";
+           end when;  
+      //U = trapezoidalDiscreteTimeStep(pre(U),pre(QBor_flow),QBor_flow,Tsample) "Trapezoidal Rule";
+      //delTBor = trapezoidalDiscreteTimeStep(pre(delTBor),pre(dTStepdt)*pre(QBor_flow) + pre(derDelTBor0),dTStepdt*QBor_flow +derDelTBor0,Tsample) "Trapezoidal Rule";
+      end for;
+
   else 
     der(delTBor_1d) = dTStepdt .* QBor_flow_1d + derDelTBor0;
     der(U[:,1]) = QBor_flow_1d;

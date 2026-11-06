@@ -1,24 +1,20 @@
 {
   "version" : "2",
-  "id" : "d78ecc61-350d-4b38-aab5-46b7ff23ba62",
+  "id" : "e79118df-b331-4396-84b3-c5495ee3b0cc",
   "experiment" : {
     "base" : {
       "analysis" : {
-        "variableFilters" : [ {
-          "type" : "text",
-          "value" : "borHol.groTemRes.*"
-        } ],
+        "variableFilters" : [ ],
         "selectedType" : "dynamic",
         "choices" : [ {
           "type" : "dynamic",
           "parameters" : {
-            "final_time" : 31536000,
+            "final_time" : 7776000,
             "start_time" : 0
           },
           "simulationOptions" : {
             "dynamic_diagnostics" : false,
-            "ncp" : 8760,
-            "solver" : "Radau5ODE"
+            "ncp" : 500
           },
           "solverOptions" : {
             "store_event_points" : true
@@ -43,16 +39,13 @@
       },
       "modifiers" : {
         "initializeFrom" : "",
-        "variables" : [ {
-          "name" : "borHol.groTemRes.DiscreteSolver",
-          "expression" : "true"
-        } ]
+        "variables" : [ ]
       }
     }
   },
   "metadata" : {
-    "created" : "2026-05-06 01:57:45.383077323",
-    "lastModified" : "2026-05-06T14:42:52.078202865Z",
-    "name" : "Trapezoidal"
+    "created" : "2026-07-17 01:55:22.860460736",
+    "lastModified" : "2026-07-17 01:55:22.860460736",
+    "name" : "Experiment 1"
   }
 }

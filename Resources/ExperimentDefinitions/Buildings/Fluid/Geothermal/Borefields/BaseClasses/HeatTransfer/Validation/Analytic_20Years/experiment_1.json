@@ -1,6 +1,6 @@
 {
   "version" : "2",
-  "id" : "e9fdcaca-1aa8-41bf-bdfc-7b11dc667ca2",
+  "id" : "e3c5dbb8-6e1b-40ef-a90b-86815be7d387",
   "experiment" : {
     "base" : {
       "analysis" : {
@@ -42,13 +42,16 @@
       },
       "modifiers" : {
         "initializeFrom" : "",
-        "variables" : [ ]
+        "variables" : [ {
+          "name" : "groTemRes.DiscreteSolver",
+          "expression" : "true"
+        } ]
       }
     }
   },
   "metadata" : {
-    "created" : "2026-05-06 00:19:05.678887077",
-    "lastModified" : "2026-05-06T00:20:07.932100850Z",
-    "name" : "Continuous"
+    "created" : "2026-05-06 18:31:34.331517525",
+    "lastModified" : "2026-05-06T18:32:50.264851353Z",
+    "name" : "Experiment 1"
   }
 }
